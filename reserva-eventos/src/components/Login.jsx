@@ -11,9 +11,9 @@ export default function Login() {
     e.preventDefault();
 
     // Usuarios falsos en memoria
-    if (email === "admin@test.com" && clave === "1234") {
+    if (email === "a@a" && clave === "a") {
       navigate("/admin");
-    } else if (email === "user@test.com" && clave === "1234") {
+    } else if (email === "u@u" && clave === "u") {
       navigate("/usuario");
     } else {
       setError("Credenciales incorrectas");
