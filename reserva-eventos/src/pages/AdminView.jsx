@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import FormularioEspacios from "../components/FormularioEspacios";
+import FormularioEventos from "../components/FormularioEventos";
 
 export default function AdminView() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export default function AdminView() {
 
       <div className="container mt-4">
         <FormularioEspacios />
+        <FormularioEventos />
       </div>
     </div>
   );

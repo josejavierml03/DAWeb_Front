@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import ListaEventos from "../components/ListaEventos";
+import ListaReservas from "../components/ListaReservas";
 
 export default function UserDashboard() {
   const navigate = useNavigate();
@@ -19,7 +21,10 @@ export default function UserDashboard() {
         <button className="btn btn-outline-danger" onClick={handleLogout}>Cerrar Sesión</button>
       </div>
 
-      {/* Aquí incluir componentes  */}
+       <div className="container mt-4">
+              <ListaEventos />
+              <ListaReservas />
+        </div>
     </div>
   );
 }
