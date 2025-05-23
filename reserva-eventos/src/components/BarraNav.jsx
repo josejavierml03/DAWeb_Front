@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Navbar() {
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+  axios.post("http://localhost:8090/auth/logout", {}, {
+    withCredentials: true
+  }).then(() => {
+    setUser(null);
+    navigate("/login");
+  }).catch(() => {
+    setUser(null);
+    navigate("/login");
+  });
+};
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: "#175f68" }}>
       <div className="container-fluid">
@@ -15,19 +33,25 @@ export default function Navbar() {
             <li className="nav-item">
               <Link className="nav-link" to="/">Inicio</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin">Administrado</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/usuario">Usuario</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">Login</Link>
-            </li>
+            {(user?.roles === "GESTOR_EVENTOS" || user?.roles === "PROPIETARIO_ESPACIOS") && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/admin">Administrador</Link>
+              </li>
+            )}
+            {user?.roles === "USUARIO" && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/usuario">Usuario</Link>
+              </li>
+            )}
           </ul>
-          <span className="navbar-text text-white">
-            Bienvenido, usuario@demo.com
-          </span>
+           {user && (
+            <div className="d-flex align-items-center text-white">
+              <span className="me-3">Bienvenido, {user.nombreCompleto}</span>
+              <button className="btn btn-outline-light btn-sm" onClick={handleLogout}>
+                Cerrar sesión
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </nav>
