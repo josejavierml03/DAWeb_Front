@@ -7,7 +7,11 @@ export default function ListaEspacios() {
   const [espacios, setEspacios] = useState([]);
   const [error, setError] = useState("");
   const [editandoId, setEditandoId] = useState(null);
-  const [formEdit, setFormEdit] = useState({ nombre: "", capacidad: "", descripcion: "" });
+  const [formEdit, setFormEdit] = useState({
+    nombre: "",
+    capacidad: "",
+    descripcion: ""
+  });
 
   const fetchEspacios = async () => {
     try {
@@ -45,36 +49,61 @@ export default function ListaEspacios() {
   };
 
   const handleSave = async (id) => {
-  try {
-    await axios.patch(`http://localhost:8090/espacios/${id}`, formEdit, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    });
+    try {
+      await axios.patch(`http://localhost:8090/espacios/${id}`, formEdit, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
 
-    setEspacios((prev) =>
-      prev.map((esp) =>
-        esp.es.id === id
-          ? {
-              ...esp,
-              es: {
-                ...esp.es,
-                nombre: formEdit.nombre,
-                capacidad: formEdit.capacidad,
-                descripcion: formEdit.descripcion,
-              },
-            }
-          : esp
-      )
-    );
+      setEspacios((prev) =>
+        prev.map((esp) =>
+          esp.es.id === id
+            ? {
+                ...esp,
+                es: {
+                  ...esp.es,
+                  nombre: formEdit.nombre,
+                  capacidad: formEdit.capacidad,
+                  descripcion: formEdit.descripcion,
+                },
+              }
+            : esp
+        )
+      );
 
-    setEditandoId(null);
-  } catch (err) {
-    console.error("Error al actualizar espacio:", err);
-    setError("No se pudo actualizar el espacio.");
-  }
-};
+      setEditandoId(null);
+    } catch (err) {
+      console.error("Error al actualizar espacio:", err);
+      setError("No se pudo actualizar el espacio.");
+    }
+  };
+
+  const handleCambiarEstado = async (id, nuevoEstado) => {
+    try {
+      const form = new URLSearchParams();
+      form.append("estado", nuevoEstado);
+
+      await axios.put(`http://localhost:8090/espacios/${id}/estado`, form, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        withCredentials: true,
+      });
+
+      setEspacios((prev) =>
+        prev.map((esp) =>
+          esp.es.id === id
+            ? { ...esp, es: { ...esp.es, estado: nuevoEstado } }
+            : esp
+        )
+      );
+    } catch (err) {
+      console.error("Error al cambiar el estado:", err);
+      setError("No se pudo actualizar el estado del espacio.");
+    }
+  };
 
   return (
     <div className="mt-5">
@@ -105,15 +134,47 @@ export default function ListaEspacios() {
                   value={formEdit.descripcion}
                   onChange={handleChange}
                 />
-                <button className="btn btn-success btn-sm me-2" onClick={() => handleSave(esp.es.id)}>Guardar</button>
-                <button className="btn btn-secondary btn-sm" onClick={() => setEditandoId(null)}>Cancelar</button>
+                <button
+                  className="btn btn-success btn-sm me-2"
+                  onClick={() => handleSave(esp.es.id)}
+                >
+                  Guardar
+                </button>
+                <button
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => setEditandoId(null)}
+                >
+                  Cancelar
+                </button>
               </div>
             ) : (
               <div>
                 <h5>{esp.es.nombre}</h5>
                 <p>{esp.es.descripcion}</p>
                 <p><strong>Capacidad:</strong> {esp.es.capacidad}</p>
-                <button className="btn btn-warning btn-sm" onClick={() => handleEditClick(esp)}>Editar</button>
+                <p>
+                  <strong>Estado:</strong>{" "}
+                  <span className={esp.es.estado === "cerrado" ? "text-danger" : "text-success"}>
+                    {esp.es.estado}
+                  </span>
+                </p>
+                <button
+                  className="btn btn-warning btn-sm me-2"
+                  onClick={() => handleEditClick(esp)}
+                >
+                  Editar
+                </button>
+                <button
+                  className={`btn btn-sm ${esp.es.estado === "cerrado" ? "btn-success" : "btn-danger"}`}
+                  onClick={() =>
+                    handleCambiarEstado(
+                      esp.es.id,
+                      esp.es.estado === "cerrado" ? "activo" : "cerrado"
+                    )
+                  }
+                >
+                  {esp.es.estado === "cerrado" ? "Activar espacio" : "Cerrar espacio"}
+                </button>
               </div>
             )}
           </li>

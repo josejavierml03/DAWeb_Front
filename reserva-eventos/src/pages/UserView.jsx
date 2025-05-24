@@ -6,9 +6,6 @@ import ListaReservas from "../components/ListaReservas";
 export default function UserDashboard() {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    navigate("/");
-  };
 
   return (
     <div className="container mt-4">
@@ -18,9 +15,7 @@ export default function UserDashboard() {
       <div className="mt-4">
         <button className="btn btn-primary me-3">Ver Eventos</button>
         <button className="btn btn-secondary me-3">Mis Reservas</button>
-        <button className="btn btn-outline-danger" onClick={handleLogout}>Cerrar Sesión</button>
       </div>
-
        <div className="container mt-4">
               <ListaEventos />
               <ListaReservas />

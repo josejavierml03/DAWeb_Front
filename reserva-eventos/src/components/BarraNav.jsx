@@ -19,7 +19,7 @@ export default function Navbar() {
     navigate("/login");
   });
 };
-
+  const roles = user?.roles?.split(",") || [];
   return (
     <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: "#175f68" }}>
       <div className="container-fluid">
@@ -33,12 +33,13 @@ export default function Navbar() {
             <li className="nav-item">
               <Link className="nav-link" to="/">Inicio</Link>
             </li>
-            {(user?.roles === "GESTOR_EVENTOS" || user?.roles === "PROPIETARIO_ESPACIOS") && (
+            {(roles.includes("GESTOR_EVENTOS") || roles.includes("PROPIETARIO_ESPACIOS")) && (
               <li className="nav-item">
                 <Link className="nav-link" to="/admin">Administrador</Link>
               </li>
             )}
-            {user?.roles === "USUARIO" && (
+
+            {roles.includes("USUARIO") && (
               <li className="nav-item">
                 <Link className="nav-link" to="/usuario">Usuario</Link>
               </li>
