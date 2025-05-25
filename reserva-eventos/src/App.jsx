@@ -18,8 +18,8 @@ function AppContent() {
     <>
       {!hideNavbar && <BarraNav />}
       <Routes>
+        <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<RutaProtegida><Home/></RutaProtegida>} />
         <Route path="/admin" element={<RutaProtegida><AdminView /></RutaProtegida>} />
         <Route path="/usuario" element={<RutaProtegida><UserView /></RutaProtegida>} />
         <Route path="*" element={<Navigate to="/login" />} />
