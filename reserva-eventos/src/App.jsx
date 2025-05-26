@@ -8,15 +8,17 @@ import { UserProvider } from "./components/UserContext";
 import RutaProtegida from "./components/RutaProtegida";
 import { Navigate } from "react-router-dom";
 import OauthSuccess from "./pages/OauthSuccess";
+import Footer from "./components/Footer";
 
 
 function AppContent() {
   const location = useLocation();
-  const hideNavbar = location.pathname === "/login";
+  const hideNavbarAndFooter = location.pathname === "/login";
+  
 
   return (
     <>
-      {!hideNavbar && <BarraNav />}
+      {!hideNavbarAndFooter && <BarraNav />}
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login />} />
@@ -25,6 +27,7 @@ function AppContent() {
         <Route path="*" element={<Navigate to="/login" />} />
         <Route path="/oauth-success" element={<OauthSuccess />} />
       </Routes>
+       {!hideNavbarAndFooter && <Footer />}
     </>
   );
 }

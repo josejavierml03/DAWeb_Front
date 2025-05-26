@@ -29,19 +29,16 @@ export default function Navbar() {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">Inicio</Link>
-            </li>
+          <ul className="navbar-nav me-auto px-2">
             {(roles.includes("GESTOR_EVENTOS") || roles.includes("PROPIETARIO_ESPACIOS")) && (
               <li className="nav-item">
-                <Link className="nav-link" to="/admin">Administrador</Link>
+                <Link className="nav-link" to="/admin">Panel de Administrador</Link>
               </li>
             )}
 
             {roles.includes("USUARIO") && (
               <li className="nav-item">
-                <Link className="nav-link" to="/usuario">Usuario</Link>
+                <Link className="nav-link" to="/usuario">Panel de Usuario</Link>
               </li>
             )}
           </ul>
