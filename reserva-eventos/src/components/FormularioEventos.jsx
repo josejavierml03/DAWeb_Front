@@ -18,13 +18,12 @@ export default function EventForm() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
-  // Manejo de cambios en inputs
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Petición a espacios/libres cuando hay datos suficientes
   useEffect(() => {
     const { fechaInicio, fechaFin, plazas } = formData;
     

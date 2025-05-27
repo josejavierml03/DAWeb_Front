@@ -57,21 +57,16 @@ export default function ListaEventos() {
       const matchCategoria = !filtroCategoria || categoriaNorm === filtroCategoria;
       const matchEspacio = !filtroEspacio || espacioNorm === filtroEspacio;
       const matchPropietario = !filtroPropietario || propietarioNorm === filtroPropietario;
-      const matchPlazas = !filtros.minPlazas || (evento.plazas && parseInt(evento.plazas) >= parseInt(filtros.minPlazas));
+      const matchPlazas = !filtros.minPlazas || (evento.plazasDisponibles != null && parseInt(evento.plazasDisponibles) >= parseInt(filtros.minPlazas));
 
       return matchNombre && matchCategoria && matchEspacio && matchPropietario && matchPlazas;
     });
 
-    setEventosFiltradosAplicados(filtrados);
-  } else {
-    setEventosFiltradosAplicados(eventos);
-  }
-};
-
-
-
-
-
+        setEventosFiltradosAplicados(filtrados);
+      } else {
+        setEventosFiltradosAplicados(eventos);
+      }
+    };
 
   useEffect(() => {
     const fetchEventos = async () => {
@@ -106,19 +101,25 @@ export default function ListaEventos() {
                 espacio = resEspacio.data;
               }
 
-              return {
-                ...evento,
-                cancelado: detalle.data.cancelado === true,
-                idEspacio: espacioId,
-                espacio,
-                nombre: detalle.data.nombre,
-                categoria: detalle.data.categoria,
-                fechaInicio: detalle.data.fechaInicio,
-                fechaFin: detalle.data.fechaFin,
-                descripcion: detalle.data.descripcion,
-                plazas: detalle.data.plazas
-              };
-            } catch (err) {
+              const plazasRes = await axios.get(`http://localhost:8090/reservas/plazas/${evento.id}`, {
+                    withCredentials: true
+              });
+              const plazasDisponibles = plazasRes.data;
+
+                  return {
+                    ...evento,
+                    cancelado: detalle.data.cancelado === true,
+                    idEspacio: espacioId,
+                    espacio,
+                    nombre: detalle.data.nombre,
+                    categoria: detalle.data.categoria,
+                    fechaInicio: detalle.data.fechaInicio,
+                    fechaFin: detalle.data.fechaFin,
+                    descripcion: detalle.data.descripcion,
+                    plazas: detalle.data.plazas,
+                    plazasDisponibles
+                  };
+              } catch (err) {
               console.error(`Error en evento ${evento.id}:`, err);
               return {
                 ...evento,
@@ -303,6 +304,9 @@ export default function ListaEventos() {
                   <strong>{evento.nombre}</strong> ({evento.categoria})<br />
                   📍 {evento.nombreEspacioFisico} - {evento.direccionEspacioFisico}<br />
                   🗓️ {evento.fechaInicio}<br />
+                  <p className="mb-1">
+                    <strong>Plazas disponibles:</strong> {evento.plazasDisponibles ?? "N/D"}
+                  </p>
                   {esUsuario && evento.espacio && (
                     <div className="mt-2 ps-2 border-start border-2">
                       <p className="mb-1"><strong>Espacio Físico:</strong> {evento.espacio.nombre}</p>
