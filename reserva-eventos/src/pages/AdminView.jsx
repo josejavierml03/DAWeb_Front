@@ -15,7 +15,7 @@ export default function AdminView() {
   const [mostrarListaEventos, setMostrarListaEventos] = useState(false);  
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 min-vh-100">
       <h2>Panel del Gestor</h2>
       <p>Bienvenido, administrador. Aquí podrás gestionar espacios y eventos.</p>
 

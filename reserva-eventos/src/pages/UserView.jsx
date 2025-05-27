@@ -12,7 +12,7 @@ export default function UserDashboard() {
   const [mostrarFinalizadas, setMostrarFinalizadas] = useState(false);
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 min-vh-100">
       <h2>Panel del Usuario</h2>
       <p>Bienvenido, aquí puedes ver y reservar eventos.</p>
 
@@ -32,10 +32,10 @@ export default function UserDashboard() {
       </div>
 
       <div className="container mt-4">
-        {mostrarEventos && <ListaEventos />}
-        {mostrarFormulario && <FormularioReserva />}
-        {mostrarActivas && <ListaReservas tipo="activas" />}
-        {mostrarFinalizadas && <ListaReservas tipo="finalizadas" />}
+          {mostrarEventos && <ListaEventos />}
+          {mostrarFormulario && <FormularioReserva />}
+          {mostrarActivas && <ListaReservas tipo="activas" />}
+          {mostrarFinalizadas && <ListaReservas tipo="finalizadas" />}
       </div>
     </div>
   );

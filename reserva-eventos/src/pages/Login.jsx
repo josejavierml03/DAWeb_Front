@@ -59,7 +59,7 @@ export default function Login() {
             />
           </div>
 
-          <div className="mb-5">
+          <div className="mb-4">
             <label className="form-label">Contraseña</label>
             <input
               type="password"
@@ -71,14 +71,10 @@ export default function Login() {
             />
           </div>
 
-          <button type="submit" className="btn btn-secondary w-100 mb-3">
+          <button type="submit" className="btn btn-secondary w-100 mb-4">
             Acceder
           </button>
         </form>
-
-        <div className="text-center mb-3">
-          <span className="text-muted">──────── o ────────</span>
-        </div>
 
         <button
           className="btn btn-outline-dark w-100"
@@ -86,6 +82,18 @@ export default function Login() {
         >
           Iniciar sesión con GitHub
         </button>
+
+        <div className="text-center mb-2 mt-2">
+          <span className="text-muted">──────── o ────────</span>
+        </div>
+        <div className="mb-2">
+        <button
+          className="btn btn-outline-dark w-100"
+          onClick={() => navigate("/")}
+        >
+          ← Volver a la página principal
+        </button>
+        </div>
       </div>
     </div>
   );
