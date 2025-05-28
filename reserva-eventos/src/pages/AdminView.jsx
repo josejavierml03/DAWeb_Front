@@ -5,6 +5,7 @@ import FormularioEventos from "../components/FormularioEventos";
 import ListaEspacios from "../components/ListaEspacios";
 import ListaEventos from "../components/ListaEventos"; 
 import { UserContext } from "../components/UserContext";
+import "./AdminView.css";
 
 export default function AdminView() {
   const navigate = useNavigate();
@@ -19,23 +20,23 @@ export default function AdminView() {
       <h2>Panel del Gestor</h2>
       <p>Bienvenido, administrador. Aquí podrás gestionar espacios y eventos.</p>
 
-      <div className="container mt-4">
+      <div className="botones-admin">
         <button
-          className="btn btn-primary me-3"
+          className="btn btn-primary"
           onClick={() => setMostrarFormularioEspacios(!mostrarFormularioEspacios)}
         >
           {mostrarFormularioEspacios ? "Ocultar" : "Crear Espacio Físico"}
         </button>
 
         <button
-          className="btn btn-secondary me-3"
+          className="btn btn-secondary"
           onClick={() => setMostrarFormularioEventos(!mostrarFormularioEventos)}
         >
           {mostrarFormularioEventos ? "Ocultar" : "Crear Evento"}
         </button>
 
         <button
-          className="btn btn-outline-primary me-3"
+          className="btn btn-outline-primary"
           onClick={() => setMostrarListaEspacios(!mostrarListaEspacios)}
         >
           {mostrarListaEspacios ? "Ocultar Lista de Espacios" : "Ver Lista de Espacios"}

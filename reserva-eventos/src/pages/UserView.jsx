@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ListaEventos from "../components/ListaEventos";
 import ListaReservas from "../components/ListaReservas";
 import FormularioReserva from "../components/FormularioReservas";
+import "./UserView.css";
 
 export default function UserDashboard() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function UserDashboard() {
       <h2>Panel del Usuario</h2>
       <p>Bienvenido, aquí puedes ver y reservar eventos.</p>
 
-      <div className="mt-4 d-flex flex-wrap gap-2">
+      <div className="botones-grid">
         <button className="btn btn-info" onClick={() => setMostrarEventos(!mostrarEventos)}>
           {mostrarEventos ? "Ocultar Eventos" : "Mostrar Eventos"}
         </button>
@@ -32,10 +33,10 @@ export default function UserDashboard() {
       </div>
 
       <div className="container mt-4">
-          {mostrarEventos && <ListaEventos />}
-          {mostrarFormulario && <FormularioReserva />}
-          {mostrarActivas && <ListaReservas tipo="activas" />}
-          {mostrarFinalizadas && <ListaReservas tipo="finalizadas" />}
+        {mostrarEventos && <ListaEventos />}
+        {mostrarFormulario && <FormularioReserva />}
+        {mostrarActivas && <ListaReservas tipo="activas" />}
+        {mostrarFinalizadas && <ListaReservas tipo="finalizadas" />}
       </div>
     </div>
   );

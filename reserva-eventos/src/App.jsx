@@ -24,7 +24,7 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<RutaProtegida><AdminView /></RutaProtegida>} />
         <Route path="/usuario" element={<RutaProtegida><UserView /></RutaProtegida>} />
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/" />} />
         <Route path="/oauth-success" element={<OauthSuccess />} />
       </Routes>
        {!hideNavbarAndFooter && <Footer />}

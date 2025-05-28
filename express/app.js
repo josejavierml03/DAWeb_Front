@@ -36,5 +36,5 @@ app.get('/redirigir', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor backend activo en http://localhost:${PORT}`);
+  console.log(`Servidor en http://localhost:${PORT}`);
 });
