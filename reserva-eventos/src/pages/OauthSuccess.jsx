@@ -21,7 +21,7 @@ export default function OauthSuccess() {
           roles: data.roles,
         });
 
-        if (data.roles === "USUARIO") navigate("/usuario");
+        if (data.roles === "USUARIO") navigate("/");
         else navigate("/admin");
       })
       .catch(() => navigate("/login"));
